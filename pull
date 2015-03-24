@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+import argparse
+import serial
+import grovepi
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-p","--port", required=True, type=int, help="port number of the sensor")
+parser.add_argument("-s","--sensor", required=True, help="Choose humidity or temperature")
+
+args = parser.parse_args()
+
+try:
+    [temperature,humidity] = grovepi.dht(args.port,1)
+    if args.sensor == "humidity":
+        print humidity
+    else:
+        print temperature 
+except IOError:
+    print "Error"
+
